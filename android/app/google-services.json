@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "718464495718",
+    "project_id": "test-1c96d",
+    "storage_bucket": "test-1c96d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718464495718:android:5084ab248124c56588fda7",
+        "android_client_info": {
+          "package_name": "com.example.pci_proyect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718464495718-9kpgt4i8d6h4qht183340761gneeeg49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtu0uSRUvPq13h9G0vhOE6EObyDhg7e4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718464495718-8lf42hb2imqngqvvvi26uc9cep982brj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "718464495718-f4no95k3mt5cr3lj274a7a27b468nas7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pciProyect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
