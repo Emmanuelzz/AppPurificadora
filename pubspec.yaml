@@ -59,6 +59,13 @@ dependencies:
   location: ^4.4.0
   flutter_svg: ^1.1.0
   cloud_firestore: ^4.7.1
+  table_calendar: ^3.0.8
+  quickalert: ^1.0.2
+  http: any  # Para realizar solicitudes HTTP
+  firebase_core: any  # Para Firebase
+  firebase_database: any  # Para Firebase Realtime Database
+  shelf: any
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:
