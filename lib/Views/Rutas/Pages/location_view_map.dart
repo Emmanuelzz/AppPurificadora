@@ -42,49 +42,50 @@ class _MapScreenState extends State<LocationViewMap> {
     );
   }
 
-  Future<String> getUserName() async {
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      String uid = user.uid;
-
-      CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('usuario');
-      DocumentSnapshot userDocument = await userCollection.doc(uid).get();
-
-      if (userDocument.exists) {
-        final data = userDocument.data() as Map<String, dynamic>;
-        if (data.containsKey('nombre')) {
-          return data['nombre'] as String;
-        }
-      }
-    }
-
-    return 'Nombre no encontrado'; // Si no se encontró el usuario o el nombre
-  }
-
   // Función para cargar marcadores desde Firestore y mostrarlos en el mapa
   void loadMarkersFromFirestore() {
-    // Aquí debes consultar Firestore para obtener los datos de los puntos (marcadores)
-    // y luego crear marcadores y agregarlos a _markers.
-    // Ejemplo:
     FirebaseFirestore.instance
         .collection('usuario')
         .get()
         .then((querySnapshot) {
+      // Limpiar los marcadores existentes antes de cargar nuevos
+      _markers.clear();
+
       querySnapshot.docs.forEach((doc) async {
-        double latitude = doc.data()['marker'].latitude;
-        double longitude = doc.data()['marker'].longitude;
-        _markers.add(Marker(
-            markerId: MarkerId(doc.id),
-            position: LatLng(latitude, longitude),
-            infoWindow: InfoWindow(
-              title: await getUserName(),
-            )
-            // Otras opciones como icono personalizado, información adicional, etc.
-            ));
+        // Verificar que el documento tenga la información necesaria
+        if (doc.exists &&
+            doc.data() != null &&
+            doc.data()!.containsKey('marker')) {
+          // Obtener las coordenadas del marcador
+          GeoPoint markerGeoPoint = doc.data()['marker'];
+          double latitude = markerGeoPoint.latitude;
+          double longitude = markerGeoPoint.longitude;
+          print("geopoint ${markerGeoPoint}");
+
+          // Verificar que las coordenadas sean válidas antes de agregar el marcador
+          if (latitude != null && longitude != null) {
+            // Obtener el nombre del usuario
+            String userName = doc.data()['Nombre'];
+
+            // Crear y agregar el marcador al conjunto de marcadores
+            _markers.add(
+              Marker(
+                markerId: MarkerId(doc.id),
+                position: LatLng(latitude, longitude),
+                infoWindow: InfoWindow(
+                  title: userName,
+                ),
+              ),
+            );
+          }
+        }
       });
+
+      // Actualizar el estado para reflejar los cambios en el mapa
       setState(() {});
+    }).catchError((error) {
+      // Manejar cualquier error que pueda ocurrir durante la carga de datos
+      print('Error al cargar marcadores: $error');
     });
   }
 
